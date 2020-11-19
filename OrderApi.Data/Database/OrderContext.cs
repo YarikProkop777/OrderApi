@@ -48,8 +48,14 @@ namespace OrderApi.Data.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            // TODO
+            modelBuilder.HasAnnotation("ProductVersion", "1.0.0");
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.CustomerFullName).IsRequired();
+            });
         }
     }
 }
