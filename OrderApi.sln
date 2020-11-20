@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi", "OrderApi\OrderApi.csproj", "{1B60F183-E26D-4FBF-A964-05586F1EB4CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApi", "OrderApi\OrderApi.csproj", "{1B60F183-E26D-4FBF-A964-05586F1EB4CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi.Data", "OrderApi.Data\OrderApi.Data.csproj", "{33A41BF3-D96B-44C5-9F15-56B94BB042BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApi.Data", "OrderApi.Data\OrderApi.Data.csproj", "{33A41BF3-D96B-44C5-9F15-56B94BB042BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi.Domain", "OrderApi.Domain\OrderApi.Domain.csproj", "{31117188-5B19-418C-ABAF-E448E37F93FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApi.Domain", "OrderApi.Domain\OrderApi.Domain.csproj", "{31117188-5B19-418C-ABAF-E448E37F93FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi.Messaging.Receive", "OrderApi.Messaging.Receive\OrderApi.Messaging.Receive.csproj", "{1CC50D47-2844-42C7-86FF-51A25F3516C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi.Service", "OrderApi.Service\OrderApi.Service.csproj", "{A3BC54A7-653F-4992-B793-54789EE9C2AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{31117188-5B19-418C-ABAF-E448E37F93FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31117188-5B19-418C-ABAF-E448E37F93FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31117188-5B19-418C-ABAF-E448E37F93FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC50D47-2844-42C7-86FF-51A25F3516C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC50D47-2844-42C7-86FF-51A25F3516C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC50D47-2844-42C7-86FF-51A25F3516C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC50D47-2844-42C7-86FF-51A25F3516C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BC54A7-653F-4992-B793-54789EE9C2AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BC54A7-653F-4992-B793-54789EE9C2AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BC54A7-653F-4992-B793-54789EE9C2AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BC54A7-653F-4992-B793-54789EE9C2AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
