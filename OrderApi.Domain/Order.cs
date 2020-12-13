@@ -8,6 +8,7 @@ namespace OrderApi.Domain
     {
         public Guid Id { get; set; }
 
+        // 2 - paid state
         public int OrderState { get; set; }
 
         public Guid CustomerId { get; set; }
