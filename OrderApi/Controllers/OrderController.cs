@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderApi.Domain;
 using OrderApi.Models;
+using OrderApi.Service.v1.Command;
 
 namespace OrderApi.Controllers
 {
@@ -16,10 +16,13 @@ namespace OrderApi.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IMapper _mapper; // _ for private members remember it!!!
+        private readonly IMediator _mediator;
 
-        public OrderController(IMapper mapper)
+
+        public OrderController(IMapper mapper, IMediator mediator)
         {
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -38,8 +41,10 @@ namespace OrderApi.Controllers
         {
             try
             {
-                return null;
-                // TODO: implement mediator
+                return await _mediator.Send(new CreateOrderCommand
+                {
+                    Order = _mapper.Map<Order>(order)
+                });
             }
             catch (Exception ex)
             {
