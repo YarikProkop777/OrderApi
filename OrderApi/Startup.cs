@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrderApi.Data.Database;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using FluentValidation.AspNetCore;
 
 namespace OrderApi
 {
@@ -23,9 +25,14 @@ namespace OrderApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions(); // ???
+            services.AddHealthChecks();
+            services.AddOptions();
 
             services.AddDbContext<OrderContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddMvc().AddFluentValidation();
 
             // swagger configurations
             services.AddSwaggerGen(c =>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using OrderApi.Domain;
 using OrderApi.Models;
 using OrderApi.Service.v1.Command;
+using OrderApi.Service.v1.Query;
 
 namespace OrderApi.Controllers
 {
@@ -42,6 +44,65 @@ namespace OrderApi.Controllers
             try
             {
                 return await _mediator.Send(new CreateOrderCommand
+                {
+                    Order = _mapper.Map<Order>(order)
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///     Action to retrieve all pay orders.
+        /// </summary>
+        /// <returns>Returns a list of all paid orders or an empty list, if no order is paid yet</returns>
+        /// <response code="200">Returned if the list of orders was retrieved</response>
+        /// <response code="400">Returned if the orders could not be retrieved</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet]
+        public async Task<ActionResult<List<Order>>> GetPaidOrders()
+        {
+            try
+            {
+                return await _mediator.Send(new GetPaidOrdersQuery());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///     Action to pay an order.
+        /// </summary>
+        /// <param name="id">The id of the order which got paid</param>
+        /// <returns>Returns the paid order</returns>
+        /// <response code="200">Returned if the order was updated (paid)</response>
+        /// <response code="400">Returned if the order could not be found with the provided id</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPut("Pay/{id}")]
+        public async Task<ActionResult<Order>> Pay(Guid id)
+        {
+            try
+            {
+                var order = await _mediator.Send(new GetOrderByIdQuery
+                {
+                    Id = id
+                });
+
+                if (order == null)
+                {
+                    return BadRequest($"No order found with the id {id}");
+                }
+
+                // set paidState to order
+                order.OrderState = 2;
+
+                return await _mediator.Send(new PayOrderCommand
                 {
                     Order = _mapper.Map<Order>(order)
                 });

@@ -4,5 +4,32 @@
         <name>OrderApi</name>
     </assembly>
     <members>
+        <member name="M:OrderApi.Controllers.OrderController.Order(OrderApi.Models.OrderModel)">
+            <summary>
+                Action to create a new order in the database
+            </summary>
+            <param name="order">Model to create a new order</param>
+            <returns>Returns the created order</returns>
+            <response code="200">>Returned if the order was created</response>
+            <response code="400">Returned if the model couldn't be parsed or saved</response>
+            <response code="422">Returned when the validations failed</response>
+        </member>
+        <member name="M:OrderApi.Controllers.OrderController.GetPaidOrders">
+            <summary>
+                Action to retrieve all pay orders.
+            </summary>
+            <returns>Returns a list of all paid orders or an empty list, if no order is paid yet</returns>
+            <response code="200">Returned if the list of orders was retrieved</response>
+            <response code="400">Returned if the orders could not be retrieved</response>
+        </member>
+        <member name="M:OrderApi.Controllers.OrderController.Pay(System.Guid)">
+            <summary>
+                Action to pay an order.
+            </summary>
+            <param name="id">The id of the order which got paid</param>
+            <returns>Returns the paid order</returns>
+            <response code="200">Returned if the order was updated (paid)</response>
+            <response code="400">Returned if the order could not be found with the provided id</response>
+        </member>
     </members>
 </doc>
