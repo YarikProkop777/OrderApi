@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using MediatR;
 using OrderApi.Domain;
 using OrderApi.Models;
 using OrderApi.Service.v1.Command;
@@ -96,7 +96,7 @@ namespace OrderApi.Controllers
 
                 if (order == null)
                 {
-                    return BadRequest($"No order found with the id {id}");
+                    return BadRequest($"No order found with the id '{id}'");
                 }
 
                 // set paidState to order

@@ -1,5 +1,5 @@
-﻿using OrderApi.Domain;
-using MediatR;
+﻿using MediatR;
+using OrderApi.Domain;
 
 namespace OrderApi.Service.v1.Command
 {

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MediatR;
 using OrderApi.Domain;
-using OrderApi.Data;
 using OrderApi.Data.Repository;
 
 namespace OrderApi.Service.v1.Command

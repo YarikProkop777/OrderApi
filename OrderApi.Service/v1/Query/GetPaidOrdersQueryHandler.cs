@@ -1,9 +1,9 @@
-﻿using MediatR;
-using OrderApi.Data.Repository;
-using OrderApi.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using OrderApi.Data.Repository;
+using OrderApi.Domain;
 
 namespace OrderApi.Service.v1.Query
 {
