@@ -11,6 +11,17 @@ using OrderApi.Data.Database;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using MediatR;
+using OrderApi.Data.Repository;
+using FluentValidation;
+using OrderApi.Models;
+using OrderApi.Validators;
+using OrderApi.Service.v1.Query;
+using System.Collections.Generic;
+using OrderApi.Domain;
+using OrderApi.Service.v1.Command;
 
 namespace OrderApi
 {
@@ -55,9 +66,37 @@ namespace OrderApi
                 c.IncludeXmlComments(xmlPath);
             });
 
-            //TODO: all configuration settings
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var actionExecutingContext = actionContext as ActionExecutingContext;
+                    
+                    if(actionContext.ModelState.ErrorCount > 0
+                        && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
+                    {
+                        return new UnprocessableEntityObjectResult(actionContext.ModelState);
+                    }
 
-            services.AddControllers();
+                    return new BadRequestObjectResult(actionContext.ModelState);
+                };
+            });
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // register services
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+            services.AddTransient<IValidator<OrderModel>, OrderModelValidator>();
+
+            // register query services
+            services.AddTransient<IRequestHandler<GetPaidOrdersQuery, List<Order>>, GetPaidOrdersQueryHandler>();
+            services.AddTransient<IRequestHandler<GetOrderByIdQuery, Order>, GetOrderByIdQueryHandler>();
+
+            // register command services
+            services.AddTransient<IRequestHandler<CreateOrderCommand, Order>, CreateOrderCommandHandler>();
+            services.AddTransient<IRequestHandler<PayOrderCommand, Order>, PayOrderCommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
