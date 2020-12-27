@@ -99,12 +99,16 @@ namespace OrderApi
             services.AddTransient<IRequestHandler<PayOrderCommand, Order>, PayOrderCommandHandler>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // send 'Strict-Transport-Security' header from server to client(browser)
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
@@ -117,13 +121,12 @@ namespace OrderApi
                 c.RoutePrefix = string.Empty;
             });
 
+            // use routing with endpoints
             app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
     }
