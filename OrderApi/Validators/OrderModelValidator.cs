@@ -9,7 +9,7 @@ namespace OrderApi.Validators
         {
             RuleFor(x => x.CustomerFullName)
                 .NotNull()
-                .WithMessage("The customer name must be not empty");
+                .WithMessage("The customer name must not be empty");
 
             RuleFor(x => x.CustomerFullName)
                 .MinimumLength(2)

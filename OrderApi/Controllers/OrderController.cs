@@ -28,7 +28,7 @@ namespace OrderApi.Controllers
         }
 
         /// <summary>
-        ///     Action to create a new order in the database
+        ///     Endpoint to create a new order in the database
         /// </summary>
         /// <param name="order">Model to create a new order</param>
         /// <returns>Returns the created order</returns>
@@ -55,7 +55,7 @@ namespace OrderApi.Controllers
         }
 
         /// <summary>
-        ///     Action to retrieve all pay orders.
+        ///     Endpoint to retrieve all pay orders.
         /// </summary>
         /// <returns>Returns a list of all paid orders or an empty list, if no order is paid yet</returns>
         /// <response code="200">Returned if the list of orders was retrieved</response>
@@ -76,7 +76,7 @@ namespace OrderApi.Controllers
         }
 
         /// <summary>
-        ///     Action to pay an order.
+        ///     Endpoint to pay an order.
         /// </summary>
         /// <param name="id">The id of the order which got paid</param>
         /// <returns>Returns the paid order</returns>
