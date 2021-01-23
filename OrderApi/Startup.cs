@@ -22,6 +22,9 @@ using OrderApi.Service.v1.Command;
 using OrderApi.Domain;
 using OrderApi.Data.Database;
 using OrderApi.Data.Repository;
+using OrderApi.Messaging.Receive.Options.v1;
+using OrderApi.Service.v1.Services;
+using OrderApi.Messaging.Receive.Receiver.v1;
 
 namespace OrderApi
 {
@@ -38,6 +41,11 @@ namespace OrderApi
         {
             services.AddHealthChecks();
             services.AddOptions();
+
+            // Rabbit Mq configurations
+            var MqConfigSettings = Configuration.GetSection("RabbitMq");
+            var MqConfig = MqConfigSettings.Get<RabbitMqConfiguration>();
+            services.Configure<RabbitMqConfiguration>(MqConfigSettings);
 
             services.AddDbContext<OrderContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
@@ -93,10 +101,20 @@ namespace OrderApi
             // register query services
             services.AddTransient<IRequestHandler<GetPaidOrdersQuery, List<Order>>, GetPaidOrdersQueryHandler>();
             services.AddTransient<IRequestHandler<GetOrderByIdQuery, Order>, GetOrderByIdQueryHandler>();
+            services.AddTransient <IRequestHandler<GetOrdersByCustomerIdQuery, List<Order>>, GetOrdersByCustomerIdQueryHandler>();
 
             // register command services
             services.AddTransient<IRequestHandler<CreateOrderCommand, Order>, CreateOrderCommandHandler>();
             services.AddTransient<IRequestHandler<PayOrderCommand, Order>, PayOrderCommandHandler>();
+            services.AddTransient<IRequestHandler<UpdateOrderCommand>, UpdateOrderCommandHandler>();
+
+            // register additional services
+            services.AddTransient<ICustomerNameUpdateService, CustomerNameUpdateService>();
+
+            if (MqConfig.Enabled)
+            {
+                services.AddHostedService<CustomerFullNameUpdateReceiver>();
+            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
