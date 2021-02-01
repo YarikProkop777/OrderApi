@@ -47,7 +47,7 @@ namespace OrderApi
             var MqConfig = MqConfigSettings.Get<RabbitMqConfiguration>();
             services.Configure<RabbitMqConfiguration>(MqConfigSettings);
 
-            services.AddDbContext<OrderContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            services.AddDbContext<OrderContext>(options => options.UseSqlServer(Configuration["Database:ConnectionString"]));
 
             services.AddAutoMapper(typeof(Startup));
 
